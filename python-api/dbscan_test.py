@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import dbscan
+from dbscan import DBSCAN
 
 
 def generate_test_data():
@@ -12,7 +12,7 @@ def generate_test_data():
     radius = 20
 
     x1 = radius * np.cos(theta) + rng.normal(size=500)
-    y1 = radius * np.sin(theta) + rng.normal(size=500)
+    y1 = (radius * np.sin(theta) + rng.normal(size=500))
 
     d1 = np.concatenate((x1, y1), axis=0)
 
@@ -25,13 +25,15 @@ def generate_test_data():
 
     d4 = np.concatenate((x4, y4), axis=0)
 
-    return np.concatenate((d1, d2, d3, d4), axis=1)
+    d5 = rng.uniform(size=200, low=-20, high=20).reshape(2, 100)
+
+    return np.concatenate((d1, d2, d3, d4, d5), axis=1)
 
 
 test_data = generate_test_data()
-dbscan_data = dbscan.DBSCAN(epsilon=3, min_pts=4, data=test_data)
+dbscan_data = DBSCAN(epsilon=1.8, min_pts=15, points=test_data)
 
-cluster_data_df = pd.Series(name="Cluster", data=dbscan_data[0], dtype=np.object_)
+cluster_data_df = pd.Series(name="Cluster", data=dbscan_data[0])
 
 data_x_df = pd.Series(name="X", data=test_data[0, :])
 data_y_df = pd.Series(name="Y", data=test_data[1, :])
