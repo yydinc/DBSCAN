@@ -12,6 +12,7 @@ def generate_test_data():
     radius = 20
 
     x1 = radius * np.cos(theta) + rng.normal(size=500)
+
     y1 = (radius * np.sin(theta) + rng.normal(size=500))
 
     d1 = np.concatenate((x1, y1), axis=0)
@@ -21,6 +22,7 @@ def generate_test_data():
     d3 = rng.normal(size=1000, loc=-5).reshape(2, 500)
 
     x4 = radius * np.cos(theta) + rng.normal(size=500)
+
     y4 = -(radius * np.sin(theta) + rng.normal(size=500))
 
     d4 = np.concatenate((x4, y4), axis=0)
@@ -41,4 +43,6 @@ data_y_df = pd.Series(name="Y", data=test_data[1, :])
 plot_data = pd.DataFrame(data=[data_x_df, data_y_df, cluster_data_df]).transpose()
 
 sns.scatterplot(data=plot_data, x="X", y="Y", hue="Cluster")
+
 plt.show()
+

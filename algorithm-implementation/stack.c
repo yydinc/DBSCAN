@@ -1,15 +1,18 @@
 #include "stack.h"
 
+
 struct ResizingStack* createStack(unsigned capacity)
 {
     if(capacity < MIN_STACK_SIZE) capacity = MIN_STACK_SIZE;
 
     struct ResizingStack* stack = (struct ResizingStack*)malloc(sizeof(struct ResizingStack));
+
     stack->capacity = capacity;
     stack->top = -1;
     stack->array = (int*)malloc(stack->capacity * sizeof(int));
     return stack;
 }
+
 
 struct ResizingStack* createStackFromArray(int* array, unsigned capacity) {
     struct ResizingStack* stack = (struct ResizingStack*)malloc(sizeof(struct ResizingStack));
@@ -23,6 +26,7 @@ int isFull(struct ResizingStack* stack)
 {
     return stack->top >= stack->capacity - 1;
 }
+
 
 int isEmpty(struct ResizingStack* stack)
 {
@@ -60,11 +64,13 @@ void push(struct ResizingStack* stack, int item)
     stack->array[++stack->top] = item;
 }
 
+
 int pop(struct ResizingStack* stack)
 {
     if (isEmpty(stack)) {
         return 0;
     }
+
 
     if(((float)stack->top + 1) / stack->capacity < 0.25) {
         shrink(stack);
@@ -72,6 +78,7 @@ int pop(struct ResizingStack* stack)
 
     return stack->array[stack->top--];
 }
+
 
 void freeStack(struct ResizingStack* stack) {
     free(stack->array);
